@@ -3,8 +3,9 @@ package kts
 @DslMarker
 annotation class KotlinMarker
 
-operator fun String.invoke(args: List<String>): String {
-    val process = ProcessBuilder(this, *args.toTypedArray())
+operator fun String.invoke(args: ArrayList<String>): String {
+    args.add(0, this)
+    val process = ProcessBuilder(args)
         .inheritIO()
         //        .directory(workingDir)
         //        .redirectOutput(Redirect.INHERIT)
