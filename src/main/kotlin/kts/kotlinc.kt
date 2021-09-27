@@ -183,10 +183,13 @@ class KotlinC {
         var useMixedNamedArguments = false
         var verbosePhases = false
 
-        operator fun invoke(builder: StringBuilder) = builder.apply {
+        operator fun invoke() {
+            val cmd = "kotlinc"
+            val args = arrayListOf<String>()
             fun ap(s: String, v: Any? = null) {
-                append(" -X$s")
-                v?.let { append("=$it") }
+                var arg = "-X$s"
+                v?.let { arg += "=$it" }
+                args += arg
             }
             abiStability?.let { ap("abi-stability", if (it) "stable" else "unstable") }
             if (addModules.isNotEmpty()) ap("add-modules", addModules.joinToString(","))
@@ -234,7 +237,7 @@ class KotlinC {
             if (skipRuntimeVersionCheck) ap("skip-runtime-version-check")
             if (strictJavaNullabilityAssertions) ap("strict-java-nullability-assertions")
             if (generateStrictMetadataVersion) ap("generate-strict-metadata-version")
-            stringConcat?.let { append("string-concat", it) }
+            stringConcat?.let { args.add("string-concat", it) }
             supportCompatqualCheckerFrameworkAnnotations?.let {
                 ap("support-compatqual-checker-framework-annotations", if (it) "enable" else "disable")
             }

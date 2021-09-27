@@ -21,6 +21,10 @@ fun main() {
 //            allowUserSignalHandlers
 //        }
     }
+
+    kotlinc {
+        version
+    }
 }
 
 fun ArrayList<String>.add(key: String, value: Any) {
