@@ -1,5 +1,7 @@
 # kotlin.kts
 
+Kotlin DSL Wrapper around `kotlin` and `kotlinc` shell commands
+
 ### Example:
 
 What in shell is:
@@ -9,7 +11,5 @@ What in shell is:
 now becomes:
 
 ```kotlin
-kotlin {
-    version
-}
+kotlin { version }
 ```
