@@ -8,28 +8,28 @@ class JvmOptions {
     var maxHeapSize = ""
 
     //  Behavioral Options
-    var allowUserSignalHandlers = NUL
-    var disableExplicitGC = NUL
-    var failOverToOldVerifier = NUL
-    var handlePromotionFailure = NUL
-    var maxFDLimit = NUL
-    var relaxAccessControlCheck = NUL
-    var scavengeBeforeFullGC = NUL
-    var useAltSigs = NUL
-    var useBoundThreads = NUL
-    var useConcMarkSweepGC = NUL
-    var useGCOverheadLimit = NUL
-    var useLWPSynchronization = NUL
-    var useParallelGC = NUL
-    var useParallelOldGC = NUL
-    var useSerialGC = NUL
-    var useTLAB = NUL
-    var useSplitVerifier = NUL
-    var useThreadPriorities = NUL
-    var useVMInterruptibleIO = NUL
+    var allowUserSignalHandlers: Boolean? = null
+    var disableExplicitGC: Boolean? = null
+    var failOverToOldVerifier: Boolean? = null
+    var handlePromotionFailure: Boolean? = null
+    var maxFDLimit: Boolean? = null
+    var relaxAccessControlCheck: Boolean? = null
+    var scavengeBeforeFullGC: Boolean? = null
+    var useAltSigs: Boolean? = null
+    var useBoundThreads: Boolean? = null
+    var useConcMarkSweepGC: Boolean? = null
+    var useGCOverheadLimit: Boolean? = null
+    var useLWPSynchronization: Boolean? = null
+    var useParallelGC: Boolean? = null
+    var useParallelOldGC: Boolean? = null
+    var useSerialGC: Boolean? = null
+    var useTLAB: Boolean? = null
+    var useSplitVerifier: Boolean? = null
+    var useThreadPriorities: Boolean? = null
+    var useVMInterruptibleIO: Boolean? = null
 
     // G1 Options
-    var useG1GC = NUL
+    var useG1GC: Boolean? = null
     var maxGCPauseMillis = -1
     var initiatingHeapOccupancyPercent = -1
     var newRatio = -1
@@ -41,7 +41,7 @@ class JvmOptions {
     var g1HeapRegionSize = -1
 
     // Performance Options
-    var aggressiveOpts = NUL
+    var aggressiveOpts: Boolean? = null
     var compileThreshold = -1
     var largePageSizeInBytes = -1
     var maxHeapFreeRatio = -1
@@ -56,42 +56,42 @@ class JvmOptions {
     //        var survivorRatio = -1
     var targetSurvivorRatio = -1
     var threadStackSize = -1
-    var useBiasedLocking = NUL
-    var useFastAccessorMethods = NUL
-    var useISM = NUL
-    var useLargePages = NUL
-    var useMPSS = NUL
-    var useStringCache = NUL
+    var useBiasedLocking: Boolean? = null
+    var useFastAccessorMethods: Boolean? = null
+    var useISM: Boolean? = null
+    var useLargePages: Boolean? = null
+    var useMPSS: Boolean? = null
+    var useStringCache: Boolean? = null
     var allocatePrefetchLines = -1
     var allocatePrefetchStyle = -1
-    var useCompressedStrings = NUL
-    var optimizeStringConcat = NUL
+    var useCompressedStrings: Boolean? = null
+    var optimizeStringConcat: Boolean? = null
 
     // Debug Options
-    var ciTime = NUL
+    var ciTime: Boolean? = null
     var errorFile: File? = null
-    var extendedDTraceProbes = NUL
+    var extendedDTraceProbes: Boolean? = null
     var heapDumpPath: File? = null
-    var heapDumpOnOutOfMemoryError = NUL
+    var heapDumpOnOutOfMemoryError: Boolean? = null
     val onError = ArrayList<String>()
     val onOutOfMemoryError = ArrayList<String>()
-    var printClassHistogram = NUL
-    var printConcurrentLocks = NUL
-    var printCommandLineFlags = NUL
-    var printCompilation = NUL
-    var printGC = NUL
-    var printGCDetails = NUL
-    var printGCTimeStamps = NUL
-    var printAdaptiveSizePolicy = NUL
-    var traceClassLoading = NUL
-    var traceClassLoadingPreorder = NUL
-    var traceClassResolution = NUL
-    var traceClassUnloading = NUL
-    var traceLoaderConstraints = NUL
-    var perfDataSaveToFile = NUL
+    var printClassHistogram: Boolean? = null
+    var printConcurrentLocks: Boolean? = null
+    var printCommandLineFlags: Boolean? = null
+    var printCompilation: Boolean? = null
+    var printGC: Boolean? = null
+    var printGCDetails: Boolean? = null
+    var printGCTimeStamps: Boolean? = null
+    var printAdaptiveSizePolicy: Boolean? = null
+    var traceClassLoading: Boolean? = null
+    var traceClassLoadingPreorder: Boolean? = null
+    var traceClassResolution: Boolean? = null
+    var traceClassUnloading: Boolean? = null
+    var traceLoaderConstraints: Boolean? = null
+    var perfDataSaveToFile: Boolean? = null
 
     //        var parallelGCThreads = -1
-    var alwaysPreTouch = NUL
+    var alwaysPreTouch: Boolean? = null
     var allocatePrefetchDistance = -1
     var inlineSmallCode = -1
     var maxInlineSize = -1
@@ -101,7 +101,7 @@ class JvmOptions {
 
     //        var maxTenuringThreshold = -1
     var loggc: File? = null
-    var useGCLogFileRotation = NUL
+    var useGCLogFileRotation: Boolean? = null
     var numberOfGClogFiles = -1
     var gcLogFileSize = -1
 
@@ -113,8 +113,14 @@ class JvmOptions {
         operator fun Int.invoke(name: String) {
             if (this != -1) append(" -J-XX:$name=$this")
         }
+
+        operator fun Boolean?.invoke(name: String) {
+            this?.let {
+                val enable = if (it) '+' else '-'
+                append(" -J-XX:$enable$name")
+            }
+        }
         //  Behavioral Options
-        allowUserSignalHandlers("AllowUserSignalHandlers")
         allowUserSignalHandlers("AllowUserSignalHandlers")
         disableExplicitGC("DisableExplicitGC")
         failOverToOldVerifier("FailOverToOldVerifier")

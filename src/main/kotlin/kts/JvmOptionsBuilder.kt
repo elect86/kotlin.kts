@@ -3,15 +3,23 @@ package kts
 import java.io.File
 
 class JvmOptionsBuilder(override val opt: JvmOptions) : BehavioralJvmOptionsBuilder,
-                                                              G1JvmOptionsBuilder,
-                                                              PerformanceJvmOptionsBuilder,
-                                                              DebugJvmOptionsBuilder {
+                                                        G1JvmOptionsBuilder,
+                                                        PerformanceJvmOptionsBuilder,
+                                                        DebugJvmOptionsBuilder {
 
     /** Units can be marked as ‘g' for GB, ‘m' for MB and ‘k' for KB. */
-    var minHeapSize: String by opt::minHeapSize
+    var minHeapSize: String
+        @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
+        set(value) {
+            opt.minHeapSize = value
+        }
 
     /** Units can be marked as ‘g' for GB, ‘m' for MB and ‘k' for KB. */
-    var maxHeapSize: String by opt::maxHeapSize
+    var maxHeapSize: String
+        @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
+        set(value) {
+            opt.maxHeapSize = value
+        }
 
     inline fun behavioral(block: BehavioralJvmOptionsBuilder.() -> Unit) = block()
     inline fun g1(block: G1JvmOptionsBuilder.() -> Unit) = block()
@@ -24,106 +32,201 @@ interface BehavioralJvmOptionsBuilder {
     val opt: JvmOptions
 
     /** Do not complain if the application installs signal handlers. (Relevant to Solaris and Linux only.) */
-    fun allowUserSignalHandlers(default: Boolean = false) {
-        opt.allowUserSignalHandlers = default()
-    }
+    var allowUserSignalHandlers: Boolean
+        get() {
+            opt.allowUserSignalHandlers = true
+            return true
+        }
+        set(value) {
+            opt.allowUserSignalHandlers = value
+        }
 
     /** By default calls to System.gc() are enabled (-XX:-DisableExplicitGC). Use -XX:+DisableExplicitGC to disable
      *  calls to System.gc(). Note that the JVM still performs garbage collection when necessary. */
-    fun disableExplicitGC(default: Boolean = false) {
-        opt.disableExplicitGC = default()
-    }
+    var disableExplicitGC: Boolean
+        get() {
+            opt.disableExplicitGC = true
+            return true
+        }
+        set(value) {
+            opt.disableExplicitGC = value
+        }
 
     /** Fail over to old verifier when the new type checker fails. (Introduced in 6.) */
-    fun failOverToOldVerifier(default: Boolean = true) {
-        opt.failOverToOldVerifier = default()
-    }
+    var failOverToOldVerifier: Boolean
+        get() {
+            opt.failOverToOldVerifier = true
+            return true
+        }
+        set(value) {
+            opt.failOverToOldVerifier = value
+        }
 
     /** The youngest generation collection does not require a guarantee of full promotion of all live objects.
      *  (Introduced in 1.4.2 update 11) [5.0 and earlier: false.] */
-    fun handlePromotionFailure(default: Boolean = true) {
-        opt.handlePromotionFailure = default()
-    }
+    var handlePromotionFailure: Boolean
+        get() {
+            opt.handlePromotionFailure = true
+            return true
+        }
+        set(value) {
+            opt.handlePromotionFailure = value
+        }
 
     /** Bump the number of file descriptors to max. (Relevant  to Solaris only.) */
-    fun maxFDLimit(default: Boolean = true) {
-        opt.maxFDLimit = default()
-    }
+    var maxFDLimit: Boolean
+        get() {
+            opt.maxFDLimit = true
+            return true
+        }
+        set(value) {
+            opt.maxFDLimit = value
+        }
 
     /** Relax the access control checks in the verifier. (Introduced in 6.) */
-    fun relaxAccessControlCheck(default: Boolean = false) {
-        opt.relaxAccessControlCheck = default()
-    }
+    var relaxAccessControlCheck: Boolean
+        get() {
+            opt.relaxAccessControlCheck = true
+            return true
+        }
+        set(value) {
+            opt.relaxAccessControlCheck = value
+        }
 
     /** Do young generation GC prior to a full GC. (Introduced in 1.4.1.) */
-    fun scavengeBeforeFullGC(default: Boolean = true) {
-        opt.scavengeBeforeFullGC = default()
-    }
+    var scavengeBeforeFullGC: Boolean
+        get() {
+            opt.scavengeBeforeFullGC = true
+            return true
+        }
+        set(value) {
+            opt.scavengeBeforeFullGC = value
+        }
 
     /** Use alternate signals instead of SIGUSR1 and SIGUSR2 for VM internal signals. (Introduced in 1.3.1 update
      *  9, 1.4.1. Relevant to Solaris only.) */
-    fun useAltSigs(default: Boolean = true) {
-        opt.useAltSigs = default()
-    }
+    var useAltSigs: Boolean
+        get() {
+            opt.useAltSigs = true
+            return true
+        }
+        set(value) {
+            opt.useAltSigs = value
+        }
 
     /** Bind user level threads to kernel threads. (Relevant to Solaris only.) */
-    fun useBoundThreads(default: Boolean = true) {
-        opt.useBoundThreads = default()
-    }
+    var useBoundThreads: Boolean
+        get() {
+            opt.useBoundThreads = true
+            return true
+        }
+        set(value) {
+            opt.useBoundThreads = value
+        }
 
     /** Use concurrent mark-sweep collection for the old generation. (Introduced in 1.4.1) */
-    fun useConcMarkSweepGC(default: Boolean = false) {
-        opt.useConcMarkSweepGC = default()
-    }
+    var useConcMarkSweepGC: Boolean
+        get() {
+            opt.useConcMarkSweepGC = true
+            return true
+        }
+        set(value) {
+            opt.useConcMarkSweepGC = value
+        }
 
     /** Use a policy that limits the proportion of the VM's time that is spent in GC before an OutOfMemory error is
      * thrown. (Introduced in 6.) */
-    fun useGCOverheadLimit(default: Boolean = true) {
-        opt.useGCOverheadLimit = default()
-    }
+    var useGCOverheadLimit: Boolean
+        get() {
+            opt.useGCOverheadLimit = true
+            return true
+        }
+        set(value) {
+            opt.useGCOverheadLimit = value
+        }
 
     /** Use LWP-based instead of thread based synchronization. (Introduced in 1.4.0. Relevant to Solaris only.) */
-    fun useLWPSynchronization(default: Boolean = true) {
-        opt.useLWPSynchronization = default()
-    }
+    var useLWPSynchronization: Boolean
+        get() {
+            opt.useLWPSynchronization = true
+            return true
+        }
+        set(value) {
+            opt.useLWPSynchronization = value
+        }
 
     /** Use parallel garbage collection for scavenges. (Introduced in 1.4.1) */
-    fun useParallelGC(default: Boolean = true) {
-        opt.useParallelGC = default()
-    }
+    var useParallelGC: Boolean
+        get() {
+            opt.useParallelGC = true
+            return true
+        }
+        set(value) {
+            opt.useParallelGC = value
+        }
 
     /** Use parallel garbage collection for the full collections. Enabling this option automatically sets
      *  -XX:+UseParallelGC. (Introduced in 5.0 update 6.) */
-    fun useParallelOldGC(default: Boolean = false) {
-        opt.useParallelOldGC = default()
-    }
+    var useParallelOldGC: Boolean
+        get() {
+            opt.useParallelOldGC = true
+            return true
+        }
+        set(value) {
+            opt.useParallelOldGC = value
+        }
 
     /** Use serial garbage collection. (Introduced in 5.0.) */
-    fun useSerialGC(default: Boolean = false) {
-        opt.useSerialGC = default()
-    }
+    var useSerialGC: Boolean
+        get() {
+            opt.useSerialGC = true
+            return true
+        }
+        set(value) {
+            opt.useSerialGC = value
+        }
 
     /** Use thread-local object allocation (Introduced in 1.4.0, known as UseTLE prior to that.) [1.4.2 and earlier,
      *  x86 or with -client: false] */
-    fun useTLAB(default: Boolean = true) {
-        opt.useTLAB = default()
-    }
+    var useTLAB: Boolean
+        get() {
+            opt.useTLAB = true
+            return true
+        }
+        set(value) {
+            opt.useTLAB = value
+        }
 
     /** Use the new type checker with StackMapTable attributes. (Introduced in 5.0.)[5.0: false] */
-    fun useSplitVerifier(default: Boolean = true) {
-        opt.useSplitVerifier = default()
-    }
+    var useSplitVerifier: Boolean
+        get() {
+            opt.useSplitVerifier = true
+            return true
+        }
+        set(value) {
+            opt.useSplitVerifier = value
+        }
 
     /** Use native thread priorities. */
-    fun useThreadPriorities(default: Boolean = true) {
-        opt.useThreadPriorities = default()
-    }
+    var useThreadPriorities: Boolean
+        get() {
+            opt.useThreadPriorities = true
+            return true
+        }
+        set(value) {
+            opt.useThreadPriorities = value
+        }
 
     /** Thread interrupt before or with EINTR for I/O operations results in OS_INTRPT. (Introduced in 6. Relevant
      *  to Solaris only.) */
-    fun useVMInterruptibleIO(default: Boolean = true) {
-        opt.useVMInterruptibleIO = default()
-    }
+    var useVMInterruptibleIO: Boolean
+        get() {
+            opt.useVMInterruptibleIO = true
+            return true
+        }
+        set(value) {
+            opt.useVMInterruptibleIO = value
+        }
 }
 
 interface G1JvmOptionsBuilder {
@@ -131,9 +234,14 @@ interface G1JvmOptionsBuilder {
     val opt: JvmOptions
 
     /** Use the Garbage First (G1) Collector */
-    fun useG1GC(default: Boolean = true) {
-        opt.useG1GC = default()
-    }
+    var useG1GC: Boolean
+        get() {
+            opt.useG1GC = true
+            return true
+        }
+        set(value) {
+            opt.useG1GC = value
+        }
 
     /** Sets a target for the maximum GC pause time. This is a soft goal, and the JVM will make its best effort to
      *  achieve it. */
@@ -213,9 +321,14 @@ interface PerformanceJvmOptionsBuilder {
 
     /** Turn on point performance compiler optimizations that are expected to be default in upcoming releases.
      *  (Introduced in 5.0 update 6.) */
-    fun aggressiveOpts(default: Boolean = true) {
-        opt.aggressiveOpts = default()
-    }
+    var aggressiveOpts: Boolean
+        get() {
+            opt.aggressiveOpts = true
+            return true
+        }
+        set(value) {
+            opt.aggressiveOpts = value
+        }
 
     /** Number of method invocations/branches before compiling [-client: 1,500] */
     var compileThreshold: Int
@@ -308,36 +421,66 @@ interface PerformanceJvmOptionsBuilder {
     /** Enable biased locking. For more details, see this tuning example:
      *      https://www.oracle.com/java/technologies/java-tuning.html#section4.2.5
      *  (Introduced in 5.0 update 6.) [5.0: false] */
-    fun useBiasedLocking(default: Boolean = true) {
-        opt.useBiasedLocking = default()
-    }
+    var useBiasedLocking: Boolean
+        get() {
+            opt.useBiasedLocking = true
+            return true
+        }
+        set(value) {
+            opt.useBiasedLocking = value
+        }
 
     /** Use optimized versions of Get<Primitive>Field. */
-    fun useFastAccessorMethods(default: Boolean = true) {
-        opt.useFastAccessorMethods = default()
-    }
+    var useFastAccessorMethods: Boolean
+        get() {
+            opt.useFastAccessorMethods = true
+            return true
+        }
+        set(value) {
+            opt.useFastAccessorMethods = value
+        }
 
     /** Use Intimate Shared Memory. [Not accepted for non-Solaris platforms.] */
-    fun useISM(default: Boolean = false) {
-        opt.useISM = default()
-    }
+    var useISM: Boolean
+        get() {
+            opt.useISM = true
+            return true
+        }
+        set(value) {
+            opt.useISM = value
+        }
 
     /** Use large page memory. (Introduced in 5.0 update 5.) For details, see Java Support for Large Memory Pages.
      *      https://www.oracle.com/java/technologies/javase/largememory-pages.html */
-    fun useLargePages(default: Boolean = true) {
-        opt.useLargePages = default()
-    }
+    var useLargePages: Boolean
+        get() {
+            opt.useLargePages = true
+            return true
+        }
+        set(value) {
+            opt.useLargePages = value
+        }
 
     /** Use Multiple Page Size Support w/4mb pages for the heap. Do not use with ISM as this replaces the need for
      * ISM. (Introduced in 1.4.0 update 1, Relevant to Solaris 9 and newer.) [1.4.1 and earlier: false] */
-    fun useMPSS(default: Boolean = true) {
-        opt.useMPSS = default()
-    }
+    var useMPSS: Boolean
+        get() {
+            opt.useMPSS = true
+            return true
+        }
+        set(value) {
+            opt.useMPSS = value
+        }
 
     /** Enables caching of commonly allocated strings. */
-    fun useStringCache(default: Boolean = true) {
-        opt.useStringCache = default()
-    }
+    var useStringCache: Boolean
+        get() {
+            opt.useStringCache = true
+            return true
+        }
+        set(value) {
+            opt.useStringCache = value
+        }
 
     /** Number of cache lines to load after the last object allocation using prefetch instructions generated in JIT
      *  compiled code. Default values are 1 if the last allocated object was an instance and 3 if it was an array. */
@@ -359,14 +502,24 @@ interface PerformanceJvmOptionsBuilder {
 
     /** Use a byte[] for Strings which can be represented as pure ASCII.
      *  (Introduced in Java 6 Update 21 Performance Release) */
-    fun useCompressedStrings(default: Boolean = true) {
-        opt.useCompressedStrings = default()
-    }
+    var useCompressedStrings: Boolean
+        get() {
+            opt.useCompressedStrings = true
+            return true
+        }
+        set(value) {
+            opt.useCompressedStrings = value
+        }
 
     /** Optimize String concatenation operations where possible. (Introduced in Java 6 Update 20) */
-    fun optimizeStringConcat(default: Boolean = true) {
-        opt.optimizeStringConcat = default()
-    }
+    var optimizeStringConcat: Boolean
+        get() {
+            opt.optimizeStringConcat = true
+            return true
+        }
+        set(value) {
+            opt.optimizeStringConcat = value
+        }
 }
 
 interface DebugJvmOptionsBuilder {
@@ -374,9 +527,14 @@ interface DebugJvmOptionsBuilder {
     val opt: JvmOptions
 
     /** Prints time spent in JIT Compiler. (Introduced in 1.4.0.) */
-    fun ciTime(default: Boolean = false) {
-        opt.ciTime = default()
-    }
+    var ciTime: Boolean
+        get() {
+            opt.ciTime = true
+            return true
+        }
+        set(value) {
+            opt.ciTime = value
+        }
 
     /** If an error occurs, save the error data to this file. (Introduced in 6.) */
     var errorFile: File
@@ -388,9 +546,14 @@ interface DebugJvmOptionsBuilder {
     /** Enable performance-impacting dtrace probes.
      *      http://docs.oracle.com/javase/6/docs/technotes/guides/vm/dtrace.html
      *  (Introduced in 6. Relevant to Solaris only.) */
-    fun extendedDTraceProbes(default: Boolean = false) {
-        opt.extendedDTraceProbes = default()
-    }
+    var extendedDTraceProbes: Boolean
+        get() {
+            opt.extendedDTraceProbes = true
+            return true
+        }
+        set(value) {
+            opt.extendedDTraceProbes = value
+        }
 
     /** Path to directory or filename for heap dump. Manageable. (Introduced in 1.4.2 update 12, 5.0 update 7.) */
     var heapDumpPath: File
@@ -401,9 +564,14 @@ interface DebugJvmOptionsBuilder {
 
     /** Dump heap to file when java.lang.OutOfMemoryError is thrown. Manageable.
      *  (Introduced in 1.4.2 update 12, 5.0 update 7.) */
-    fun heapDumpOnOutOfMemoryError(default: Boolean = false) {
-        opt.heapDumpOnOutOfMemoryError = default()
-    }
+    var heapDumpOnOutOfMemoryError: Boolean
+        get() {
+            opt.heapDumpOnOutOfMemoryError = true
+            return true
+        }
+        set(value) {
+            opt.heapDumpOnOutOfMemoryError = value
+        }
 
     /** Run user-defined commands on fatal error. (Introduced in 1.4.2 update 9.) */
     val onError: ArrayList<String>
@@ -416,76 +584,146 @@ interface DebugJvmOptionsBuilder {
     /** Print a histogram of class instances on Ctrl-Break. Manageable. (Introduced in 1.4.2.)
      *  The jmap -histo command provides equivalent functionality.
      *      http://docs.oracle.com/javase/6/docs/technotes/tools/share/jmap.html    */
-    fun printClassHistogram(default: Boolean = false) {
-        opt.printClassHistogram = default()
-    }
+    var printClassHistogram: Boolean
+        get() {
+            opt.printClassHistogram = true
+            return true
+        }
+        set(value) {
+            opt.printClassHistogram = value
+        }
 
     /** Print java.util.concurrent locks in Ctrl-Break thread dump. Manageable. (Introduced in 6.)
      *  The jstack -l command provides equivalent functionality.
      *      http://docs.oracle.com/javase/6/docs/technotes/tools/share/jstack.html  */
-    fun printConcurrentLocks(default: Boolean = false) {
-        opt.printConcurrentLocks = default()
-    }
+    var printConcurrentLocks: Boolean
+        get() {
+            opt.printConcurrentLocks = true
+            return true
+        }
+        set(value) {
+            opt.printConcurrentLocks = value
+        }
 
     /** Print flags that appeared on the command line. (Introduced in 5.0.) */
-    fun printCommandLineFlags(default: Boolean = false) {
-        opt.printCommandLineFlags = default()
-    }
+    var printCommandLineFlags: Boolean
+        get() {
+            opt.printCommandLineFlags = true
+            return true
+        }
+        set(value) {
+            opt.printCommandLineFlags = value
+        }
 
     /** Print message when a method is compiled. */
-    fun printCompilation(default: Boolean = false) {
-        opt.printCompilation = default()
-    }
+    var printCompilation: Boolean
+        get() {
+            opt.printCompilation = true
+            return true
+        }
+        set(value) {
+            opt.printCompilation = value
+        }
 
     /** Print messages at garbage collection. Manageable. */
-    fun printGC(default: Boolean = false) {
-        opt.printGC = default()
-    }
+    var printGC: Boolean
+        get() {
+            opt.printGC = true
+            return true
+        }
+        set(value) {
+            opt.printGC = value
+        }
 
     /** Print more details at garbage collection. Manageable. (Introduced in 1.4.0.) */
-    fun printGCDetails(default: Boolean = false) {
-        opt.printGCDetails = default()
-    }
+    var printGCDetails: Boolean
+        get() {
+            opt.printGCDetails = true
+            return true
+        }
+        set(value) {
+            opt.printGCDetails = value
+        }
 
     /** Print timestamps at garbage collection. Manageable (Introduced in 1.4.0.) */
-    fun printGCTimeStamps(default: Boolean = false) {
-        opt.printGCTimeStamps = default()
-    }
+    var printGCTimeStamps: Boolean
+        get() {
+            opt.printGCTimeStamps = true
+            return true
+        }
+        set(value) {
+            opt.printGCTimeStamps = value
+        }
 
     /** Enables printing of information about adaptive generation sizing. */
-    fun printAdaptiveSizePolicy(default: Boolean = false) {
-        opt.printAdaptiveSizePolicy = default()
-    }
+    var printAdaptiveSizePolicy: Boolean
+        get() {
+            opt.printAdaptiveSizePolicy = true
+            return true
+        }
+        set(value) {
+            opt.printAdaptiveSizePolicy = value
+        }
 
     /** Trace loading of classes. */
-    fun traceClassLoading(default: Boolean = false) {
-        opt.traceClassLoading = default()
-    }
+    var traceClassLoading: Boolean
+        get() {
+            opt.traceClassLoading = true
+            return true
+        }
+        set(value) {
+            opt.traceClassLoading = value
+        }
 
     /** Trace all classes loaded in order referenced (not loaded). (Introduced in 1.4.2.) */
-    fun traceClassLoadingPreorder(default: Boolean = false) {
-        opt.traceClassLoadingPreorder = default()
-    }
+    var traceClassLoadingPreorder: Boolean
+        get() {
+            opt.traceClassLoadingPreorder = true
+            return true
+        }
+        set(value) {
+            opt.traceClassLoadingPreorder = value
+        }
 
     /** Trace constant pool resolutions. (Introduced in 1.4.2.) */
-    fun traceClassResolution(default: Boolean = false) {
-        opt.traceClassResolution = default()
-    }
+    var traceClassResolution: Boolean
+        get() {
+            opt.traceClassResolution = true
+            return true
+        }
+        set(value) {
+            opt.traceClassResolution = value
+        }
 
     /** Trace unloading of classes. */
-    fun traceClassUnloading(default: Boolean = false) {
-        opt.traceClassUnloading = default()
-    }
+    var traceClassUnloading: Boolean
+        get() {
+            opt.traceClassUnloading = true
+            return true
+        }
+        set(value) {
+            opt.traceClassUnloading = value
+        }
 
     /** Trace recording of loader constraints. (Introduced in 6.) */
-    fun traceLoaderConstraints(default: Boolean = false) {
-        opt.traceLoaderConstraints = default()
-    }
+    var traceLoaderConstraints: Boolean
+        get() {
+            opt.traceLoaderConstraints = true
+            return true
+        }
+        set(value) {
+            opt.traceLoaderConstraints = value
+        }
 
     /** Saves jvmstat binary data on exit. */
-    fun perfDataSaveToFile(default: Boolean = true) {
-        opt.perfDataSaveToFile = default()
-    }
+    var perfDataSaveToFile: Boolean
+        get() {
+            opt.perfDataSaveToFile = true
+            return true
+        }
+        set(value) {
+            opt.perfDataSaveToFile = value
+        }
 
     //        /** Sets the number of garbage collection threads in the young and old parallel garbage collectors.
     //         *  The default value varies with the platform on which the JVM is running. */
@@ -497,9 +735,14 @@ interface DebugJvmOptionsBuilder {
 
     /** Pre-touch the Java heap during JVM initialization. Every page of the heap is thus demand-zeroed during
      *  initialization rather than incrementally during application execution. */
-    fun alwaysPreTouch(default: Boolean = true) {
-        opt.alwaysPreTouch = default()
-    }
+    var alwaysPreTouch: Boolean
+        get() {
+            opt.alwaysPreTouch = true
+            return true
+        }
+        set(value) {
+            opt.alwaysPreTouch = value
+        }
 
     /** Sets the prefetch distance for object allocation. Memory about to be written with the value of new objects
      *  is prefetched into cache at this distance (in bytes) beyond the address of the last allocated object.
@@ -564,9 +807,14 @@ interface DebugJvmOptionsBuilder {
         }
 
     /** Enabled GC log rotation, requires -Xloggc. */
-    fun useGCLogFileRotation(default: Boolean = false) {
-        opt.useGCLogFileRotation = default()
-    }
+    var useGCLogFileRotation: Boolean
+        get() {
+            opt.useGCLogFileRotation = true
+            return true
+        }
+        set(value) {
+            opt.useGCLogFileRotation = value
+        }
 
     /** Set the number of files to use when rotating logs, must be >= 1. The rotated log files will use the
      *  following naming scheme, <filename>.0, <filename>.1, ..., <filename>.n-1. */

@@ -14,6 +14,11 @@ operator fun String.invoke(): String {
     return String(process.inputStream.readAllBytes())
 }
 
-//fun main() {
-//    kotlin { help() }
-//}
+fun main() {
+    kotlin {
+        version
+//        jvmOptions {
+//            allowUserSignalHandlers
+//        }
+    }
+}
