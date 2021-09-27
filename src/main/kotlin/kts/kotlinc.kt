@@ -37,40 +37,40 @@ class KotlinC {
     var argFile: File? = null
 
     operator fun invoke(): String {
-        val cmd = buildString {
-            append("kotlinc")
-            if (classpath.isNotEmpty()) append(" ${classpath.joinToString(File.pathSeparator)}")
-            dst?.run { append(" -d $absolutePath") }
-            if (expression.isNotEmpty()) append(" -e $expression")
-            if (includeRuntime) append(" -include-runtime")
-            if (javaParameters) append(" -java-parameters")
-            jdkHome?.run { append(" -jdk-home $absolutePath") }
-            if (jvmTarget != -1) append(" -jvm-target $jvmTarget")
-            if (moduleName.isNotEmpty()) append(" -module-name $moduleName")
-            if (noJdk) append(" -no-jdk")
-            if (noReflect) append(" -no-reflect")
-            if (noStdlib) append(" -no-stdlib")
-            if (scriptTemplates.isNotEmpty()) append(" -script-templates ${scriptTemplates.joinToString(",")}")
-            if (wError) append(" -Werror")
-            if (apiVersion.isNotEmpty()) append(" -api-version $apiVersion")
-            if (help) append(" -h")
-            kotlinHome?.run { append(" -kotlin-home $absolutePath") }
-            if (languageVersion != -1) append(" -language-version $languageVersion")
-            if (plugins.isNotEmpty()) {
-                append(" -P")
-                for (plugin in plugins)
-                    append("plugin:$plugin")
-            }
-            if (progressive) append("- progressive")
-            if (script.isNotEmpty()) append(" -script $script")
-            if (nowarn) append(" -nowarn")
-            if (verbose) append(" -verbose")
-            if (version) append(" -version")
-            jvmOptions(this)
-            argFile?.run { append(" @$absolutePath") }
+        val cmd = "kotlinc"
+        val args = arrayListOf<String>()
+        if (classpath.isNotEmpty()) args += classpath.joinToString(File.pathSeparator)
+        dst?.run { args.add("-d", absolutePath) }
+        if (expression.isNotEmpty()) args.add("-e", expression)
+        if (includeRuntime) args += "-include-runtime"
+        if (javaParameters) args+="-java-parameters"
+        jdkHome?.run { args.add("-jdk-home", absolutePath) }
+        if (jvmTarget != -1) args.add("-jvm-target", jvmTarget)
+        if (moduleName.isNotEmpty()) args.add("-module-name", moduleName)
+        if (noJdk) args += "-no-jdk"
+        if (noReflect) args += "-no-reflect"
+        if (noStdlib) args += "-no-stdlib"
+        if (scriptTemplates.isNotEmpty()) args.add("-script-templates", scriptTemplates.joinToString(","))
+        if (wError) args += "-Werror"
+        if (apiVersion.isNotEmpty()) args.add("-api-version", apiVersion)
+        if (help) args += "-h"
+        kotlinHome?.run { args.add("-kotlin-home", absolutePath) }
+        if (languageVersion != -1) args.add("-language-version", languageVersion)
+        if (plugins.isNotEmpty()) {
+            args += "-P"
+            for (plugin in plugins)
+                args += "plugin:$plugin"
         }
+        if (progressive) args += "-progressive"
+        if (script.isNotEmpty()) args.add("-script", script)
+        if (nowarn) args += "-nowarn"
+        if (verbose) args += "-verbose"
+        if (version) args += "-version"
+        jvmOptions(args)
+        argFile?.run { args += "@$absolutePath" }
+
         //        print(cmd)
-        return cmd()
+        return cmd(args)
     }
 
     object Advanced {

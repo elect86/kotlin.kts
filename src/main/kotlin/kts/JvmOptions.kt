@@ -105,19 +105,16 @@ class JvmOptions {
     var numberOfGClogFiles = -1
     var gcLogFileSize = -1
 
-    operator fun invoke(builder: StringBuilder) = builder.apply {
-        operator fun Char.invoke(name: String) {
-            if (this != NUL) append(" -J-XX:$this$name")
-        }
+    operator fun invoke(args: ArrayList<String>) {
 
         operator fun Int.invoke(name: String) {
-            if (this != -1) append(" -J-XX:$name=$this")
+            if (this != -1) args += "-J-XX:$name=$this"
         }
 
         operator fun Boolean?.invoke(name: String) {
             this?.let {
                 val enable = if (it) '+' else '-'
-                append(" -J-XX:$enable$name")
+                args += "-J-XX:$enable$name"
             }
         }
         //  Behavioral Options
@@ -174,12 +171,12 @@ class JvmOptions {
         optimizeStringConcat("OptimizeStringConcat")
         // Debug Options
         ciTime("CITime")
-        errorFile?.let { append(" -J-XX:ErrorFile=${it.absolutePath}") }
+        errorFile?.let { args += "-J-XX:ErrorFile=${it.absolutePath}" }
         extendedDTraceProbes("ExtendedDTraceProbes")
-        heapDumpPath?.let { append(" -J-XX:HeapDumpPath=${it.absolutePath}") }
+        heapDumpPath?.let { args += "-J-XX:HeapDumpPath=${it.absolutePath}" }
         heapDumpOnOutOfMemoryError("HeapDumpOnOutOfMemoryError")
-        if (onError.isNotEmpty()) append(" -J-XX:OnError=\"${onError.joinToString(";")}\"")
-        if (onOutOfMemoryError.isNotEmpty()) append(" -J-XX:OnOutOfMemoryError=\"${onOutOfMemoryError.joinToString(",")}\"")
+        if (onError.isNotEmpty()) args += "-J-XX:OnError=\"${onError.joinToString(";")}\""
+        if (onOutOfMemoryError.isNotEmpty()) args += "-J-XX:OnOutOfMemoryError=\"${onOutOfMemoryError.joinToString(",")}\""
         printClassHistogram("PrintClassHistogram")
         printConcurrentLocks("PrintConcurrentLocks")
         printCommandLineFlags("PrintCommandLineFlags")
@@ -202,7 +199,7 @@ class JvmOptions {
         freqInlineSize("FreqInlineSize")
         loopUnrollLimit("LoopUnrollLimit")
         initialTenuringThreshold("InitialTenuringThreshold")
-        loggc?.let { append(" -J-Xloggc:${it.absolutePath}") }
+        loggc?.let { args += "-J-Xloggc:${it.absolutePath}" }
         useGCLogFileRotation("UseGCLogFileRotation")
         numberOfGClogFiles("NumberOfGClogFiles")
         gcLogFileSize("GCLogFileSize")

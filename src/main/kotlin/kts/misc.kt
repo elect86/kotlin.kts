@@ -3,8 +3,8 @@ package kts
 @DslMarker
 annotation class KotlinMarker
 
-operator fun String.invoke(): String {
-    val process = ProcessBuilder(*split(Regex("\\s+(?=[^\"]*(?:\"[^\"]*\"[^\"]*)*\$)")).toTypedArray())
+operator fun String.invoke(args: List<String>): String {
+    val process = ProcessBuilder(this, *args.toTypedArray())
         .inheritIO()
         //        .directory(workingDir)
         //        .redirectOutput(Redirect.INHERIT)
@@ -21,4 +21,9 @@ fun main() {
 //            allowUserSignalHandlers
 //        }
     }
+}
+
+fun ArrayList<String>.add(key: String, value: Any) {
+    add(key)
+    add(value.toString())
 }
