@@ -36,6 +36,10 @@ class KotlinC {
     val jvmOptions = JvmOptions()
     var argFile: File? = null
 
+
+    val sourcefiles = ArrayList<File>()
+
+
     operator fun invoke(): String {
         val cmd = "kotlinc"
         val args = arrayListOf<String>()
@@ -68,6 +72,9 @@ class KotlinC {
         if (version) args += "-version"
         jvmOptions(args)
         argFile?.run { args += "@$absolutePath" }
+
+
+        args += sourcefiles.joinToString(" ") { it.absolutePath }
 
         //        print(cmd)
         return cmd(args)
