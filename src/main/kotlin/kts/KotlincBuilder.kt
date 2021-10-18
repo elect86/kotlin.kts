@@ -96,6 +96,10 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
     /** Print a synopsis of advanced options */
     inline fun advanced(block: Advanced.() -> Unit) = Advanced().block()
 
+    /** Print a synopsis of advanced options */
+    inline fun X(block: Advanced.() -> Unit) = Advanced().block()
+
+    @KotlinMarker
     inner class Advanced {
         /** When using unstable compiler features such as FIR, use 'stable' to mark generated class files as stable to
          *  prevent diagnostics from stable compilers at the call site.
