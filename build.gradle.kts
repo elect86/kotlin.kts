@@ -16,7 +16,7 @@ plugins {
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
 
-    id("elect86.magik") version "0.2.0"
+    id("elect86.magik") version "0.2.4"
     `maven-publish`
 
     application
@@ -55,16 +55,11 @@ dependencies {
 }
 
 tasks {
-
     test { useJUnitPlatform() }
-
 }
 
 publishing {
     publications {
-        register<MavenPublication>("maven") {
-            from(components["java"])
-        }
         createGithubPublication {
             from(components["java"])
             //    artifact(sourceJar)
