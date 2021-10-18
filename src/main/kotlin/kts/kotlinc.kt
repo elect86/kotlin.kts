@@ -47,7 +47,7 @@ class KotlinC {
         dst?.run { args.add("-d", absolutePath) }
         if (expression.isNotEmpty()) args.add("-e", expression)
         if (includeRuntime) args += "-include-runtime"
-        if (javaParameters) args+="-java-parameters"
+        if (javaParameters) args += "-java-parameters"
         jdkHome?.run { args.add("-jdk-home", absolutePath) }
         if (jvmTarget != -1) args.add("-jvm-target", jvmTarget)
         if (moduleName.isNotEmpty()) args.add("-module-name", moduleName)
@@ -76,7 +76,7 @@ class KotlinC {
 
         args += sourcefiles.joinToString(" ") { it.absolutePath }
 
-        //        print(cmd)
+        print("$cmd(${args.joinToString(" ")}")
         return cmd(args)
     }
 
