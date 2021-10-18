@@ -62,6 +62,9 @@ tasks {
 
 publishing {
     publications {
+        register<MavenPublication>("maven") {
+            from(components["java"])
+        }
         createGithubPublication {
             from(components["java"])
             //    artifact(sourceJar)
