@@ -2,6 +2,7 @@ package kts
 
 import java.io.File
 
+@KotlinMarker
 class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
 
     /** List of directories and JAR/ZIP archives to search for user class files */
@@ -41,7 +42,7 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
         }
 
     /** Target version of the generated JVM bytecode (1.6 (DEPRECATED), 1.8, 9, 10, 11, 12, 13, 14, 15 or 16), default is 1.8 */
-    var jdkTarget: Int
+    var jvmTarget: Int
         @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
         set(value) {
             check(value in 8..16)
