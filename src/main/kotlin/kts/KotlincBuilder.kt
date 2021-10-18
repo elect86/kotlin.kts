@@ -861,4 +861,7 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
             ktc.argFile = value
         }
 
+
+    /** source files */
+    val sourceFiles: ArrayList<File> by ktc::sourcefiles
 }
