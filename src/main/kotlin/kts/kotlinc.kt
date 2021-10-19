@@ -22,7 +22,7 @@ class KotlinC {
     var noReflect = false
     var noStdlib = false
     val scriptTemplates = ArrayList<String>()
-    var wError = true
+    var wError = false
     var apiVersion = ""
     var help = false
     var kotlinHome: File? = null
@@ -49,7 +49,7 @@ class KotlinC {
         if (includeRuntime) args += "-include-runtime"
         if (javaParameters) args += "-java-parameters"
         jdkHome?.run { args.add("-jdk-home", absolutePath) }
-        if (jvmTarget != -1) args.add("-jvm-target", jvmTarget)
+        if (jvmTarget != -1) args.add("-jvm-target", if(jvmTarget < 9) "1.$jvmTarget" else jvmTarget)
         if (moduleName.isNotEmpty()) args.add("-module-name", moduleName)
         if (noJdk) args += "-no-jdk"
         if (noReflect) args += "-no-reflect"
