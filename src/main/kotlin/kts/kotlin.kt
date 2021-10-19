@@ -8,7 +8,7 @@ inline fun kotlin(block: KotlinBuilder.() -> Unit) {
     kt()
 }
 
-class Kotlin {
+class Kotlin(val cmd: String = "kotlin") {
 
     var howToRun: HowToRun? = null
     val classpath = ArrayList<File>()
@@ -22,10 +22,11 @@ class Kotlin {
     var help = false
     var command: File? = null
     var expression = ""
+
     val arguments = ArrayList<String>()
 
     operator fun invoke(): String {
-        val cmd = "kotlin"
+
         val args = arrayListOf<String>()
         howToRun?.let { args.add("-howtorun", it) }
         if (classpath.isNotEmpty()) args.add("-cp", classpath.joinToString(File.pathSeparator) { it.absolutePath })

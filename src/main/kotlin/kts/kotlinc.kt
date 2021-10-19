@@ -8,7 +8,7 @@ inline fun kotlinc(block: KotlincBuilder.() -> Unit) {
     ktc()
 }
 
-class KotlinC {
+class KotlinC(val cmd: String = "kotlinc") {
 
     val classpath = ArrayList<String>()
     var dst: File? = null
@@ -42,7 +42,6 @@ class KotlinC {
     var _println = false
 
     operator fun invoke(): String {
-        val cmd = "kotlinc"
         val args = arrayListOf<String>()
         if (classpath.isNotEmpty()) args += classpath.joinToString(File.pathSeparator)
         dst?.run { args.add("-d", absolutePath) }
