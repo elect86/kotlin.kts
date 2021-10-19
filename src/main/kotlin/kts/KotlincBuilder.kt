@@ -108,44 +108,44 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
         var abiStability: Boolean
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.abiStability = value
+                this@KotlincBuilder.ktc.advanced.abiStability = value
             }
 
         /** Root modules to resolve in addition to the initial modules,
          *  or all modules on the module path if <module> is ALL-MODULE-PATH */
-        val addModules: ArrayList<String> by KotlinC.Advanced::addModules
+        val addModules: ArrayList<String> by this@KotlincBuilder.ktc.advanced::addModules
 
         /** Allow no source files */
         val allowNoSourceFiles: Unit
             get() {
-                KotlinC.Advanced.allowNoSourceFiles = true
+                this@KotlincBuilder.ktc.advanced.allowNoSourceFiles = true
             }
 
         /** Do not report errors on classes in dependencies, which were compiled by an unstable version of the
          *  Kotlin compiler */
         val allowUnstableDependencies: Unit
             get() {
-                KotlinC.Advanced.allowUnstableDependencies = true
+                this@KotlincBuilder.ktc.advanced.allowUnstableDependencies = true
             }
 
         /** Assert calls behaviour */
         var assertions: KotlinC.Advanced.Assertion
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.assertion = value
+                this@KotlincBuilder.ktc.advanced.assertion = value
             }
 
         /** Path to the .xml build file to compile */
         var buildFile: File
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.buildFile = value
+                this@KotlincBuilder.ktc.advanced.buildFile = value
             }
 
         /** Reuse javac analysis and compile Java source files */
         val compileJava: Unit
             get() {
-                KotlinC.Advanced.compileJava = true
+                this@KotlincBuilder.ktc.advanced.compileJava = true
             }
 
         /** Normalize constructor calls (disable: don't normalize; enable: normalize),
@@ -153,14 +153,14 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
         var normalizeConstructorCalls: Boolean
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.normalizeConstructorCalls = value
+                this@KotlincBuilder.ktc.advanced.normalizeConstructorCalls = value
             }
 
         /** Path to JSON file to dump Java to Kotlin declaration mappings */
         var dumpDeclarationsTo: File
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.dumpDeclarationsTo = value
+                this@KotlincBuilder.ktc.advanced.dumpDeclarationsTo = value
             }
 
         /** Compile expressions and unrecognized scripts passed with the -script argument as scripts with given
@@ -168,60 +168,60 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
         var defaultScriptExtension: String
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.defaultScriptExtension = value
+                this@KotlincBuilder.ktc.advanced.defaultScriptExtension = value
             }
 
         /** Disable standard kotlin script support */
         val disableStandardScript: Unit
             get() {
-                KotlinC.Advanced.disableStandardScript = true
+                this@KotlincBuilder.ktc.advanced.disableStandardScript = true
             }
 
         /** When using the IR backend, do not clear BindingContext between psi2ir and lowerings */
         val irDoNotClearBindingContext: Unit
             get() {
-                KotlinC.Advanced.irDoNotClearBindingContext = true
+                this@KotlincBuilder.ktc.advanced.irDoNotClearBindingContext = true
             }
 
         /** Emit JVM type annotations in bytecode */
         val emitJvmTypeAnnotations: Unit
             get() {
-                KotlinC.Advanced.emitJvmTypeAnnotations = true
+                this@KotlincBuilder.ktc.advanced.emitJvmTypeAnnotations = true
             }
 
         /** Allow using features from Java language that are in preview phase. Works as `--enable-preview` in Java.
          *  All class files are marked as preview-generated thus it won't be possible to use them in release environment */
         val jvmEnablePreview: Unit
             get() {
-                KotlinC.Advanced.jvmEnablePreview = true
+                this@KotlincBuilder.ktc.advanced.jvmEnablePreview = true
             }
 
         /** Paths to output directories for friend modules (whose internals should be visible) */
-        val friendPaths: ArrayList<File> by KotlinC.Advanced::friendPaths
+        val friendPaths: ArrayList<File> by this@KotlincBuilder.ktc.advanced::friendPaths
 
         /** Compile multifile classes as a hierarchy of parts and facade */
         val multifilePartsInherit: Unit
             get() {
-                KotlinC.Advanced.multifilePartsInherit = true
+                this@KotlincBuilder.ktc.advanced.multifilePartsInherit = true
             }
 
         /** Paths where to find Java 9+ modules */
-        val modulePaths: ArrayList<File> by KotlinC.Advanced::modulePaths
+        val modulePaths: ArrayList<File> by this@KotlincBuilder.ktc.advanced::modulePaths
 
         /** Package prefix for Java files */
         val javaPackagePrefix: Unit
             get() {
-                KotlinC.Advanced.javaPackagePrefix = true
+                this@KotlincBuilder.ktc.advanced.javaPackagePrefix = true
             }
 
         /** Paths to directories with Java source files */
-        val javacArguments: ArrayList<String> by KotlinC.Advanced::javacArguments
+        val javacArguments: ArrayList<String> by this@KotlincBuilder.ktc.advanced::javacArguments
 
         /** Specify behavior for jspecify annotations. Default value is 'warn' */
         var jspecifyAnnotations: KotlinC.Advanced.Annotation
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.jspecifyAnnotations = value
+                this@KotlincBuilder.ktc.advanced.jspecifyAnnotations = value
             }
 
         /** Specify behavior for JSR-305 nullability annotations:
@@ -230,89 +230,89 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
          *      jsr305(ignore/strict/warn, "@<fq.name>")        annotation with the given fully qualified class name */
         fun jsr305(behavior: KotlinC.Advanced.Annotation, annotation: String? = null) {
             val ann = annotation?.let { "$it:" } ?: ""
-            KotlinC.Advanced.jsr305 = "$ann$behavior"
+            this@KotlincBuilder.ktc.advanced.jsr305 = "$ann$behavior"
         }
 
         /** Emit JVM default methods for interface declarations with bodies. */
         var jvmDefault: KotlinC.Advanced.JvmDefalt
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.jvmDefault = value
+                this@KotlincBuilder.ktc.advanced.jvmDefault = value
             }
 
         /** Paths to cross-platform libraries in .klib format */
-        val klib: ArrayList<File> by KotlinC.Advanced::klib
+        val klib: ArrayList<File> by this@KotlincBuilder.ktc.advanced::klib
 
         /** Select code generation scheme for lambdas. */
         var lambdas: KotlinC.Advanced.Lambdas
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.lambdas = value
+                this@KotlincBuilder.ktc.advanced.lambdas = value
             }
 
         /** Don't generate not-null assertions for arguments of platform types */
         val noCallAssertions: Unit
             get() {
-                KotlinC.Advanced.noCallAssertions = true
+                this@KotlincBuilder.ktc.advanced.noCallAssertions = true
             }
 
         /** Do not throw NPE on explicit 'equals' call for null receiver of platform boxed primitive type */
         val noExceptionOnExplicitEqualsForBoxedNull: Unit
             get() {
-                KotlinC.Advanced.noExceptionOnExplicitEqualsForBoxedNull = true
+                this@KotlincBuilder.ktc.advanced.noExceptionOnExplicitEqualsForBoxedNull = true
             }
 
         /** Do not use KotlinNothingValueException available since 1.4 */
         val noKotlinNothingValueException: Unit
             get() {
-                KotlinC.Advanced.noKotlinNothingValueException = true
+                this@KotlincBuilder.ktc.advanced.noKotlinNothingValueException = true
             }
 
         /** Disable optimizations */
         val dontOptimize: Unit
             get() {
-                KotlinC.Advanced.noOptimize = true
+                this@KotlincBuilder.ktc.advanced.noOptimize = true
             }
 
         /** Do not use optimized callable reference superclasses available from 1.4 */
         val noOptimizedCallableReferences: Unit
             get() {
-                KotlinC.Advanced.noOptimizedCallableReferences = true
+                this@KotlincBuilder.ktc.advanced.noOptimizedCallableReferences = true
             }
 
         /** Don't generate not-null assertions on parameters of methods accessible from Java */
         val noParamAssertions: Unit
             get() {
-                KotlinC.Advanced.noParamAssertions = true
+                this@KotlincBuilder.ktc.advanced.noParamAssertions = true
             }
 
         /** Don't generate not-null assertion for extension receiver arguments of platform types */
         val noReceiverAssertions: Unit
             get() {
-                KotlinC.Advanced.noReceiverAssertions = true
+                this@KotlincBuilder.ktc.advanced.noReceiverAssertions = true
             }
 
         /** Do not reset jar entry timestamps to a fixed date */
         val dontResetJarTimestamps: Unit
             get() {
-                KotlinC.Advanced.noResetJarTimestamps = true
+                this@KotlincBuilder.ktc.advanced.noResetJarTimestamps = true
             }
 
         /** Use pre-1.4 exception types in null checks instead of java.lang.NPE. See KT-22275 for more details */
         val noUnifiedNullChecks: Unit
             get() {
-                KotlinC.Advanced.noUnifiedNullChecks = true
+                this@KotlincBuilder.ktc.advanced.noUnifiedNullChecks = true
             }
 
         /** Specify behavior for specific Java nullability annotations (provided with fully qualified package name) */
-        val nullabilityAnnotations: MutableMap<String, KotlinC.Advanced.Annotation> by KotlinC.Advanced::nullabilityAnnotations
+        val nullabilityAnnotations: MutableMap<String, KotlinC.Advanced.Annotation> by this@KotlincBuilder.ktc.advanced::nullabilityAnnotations
 
         /** When using the IR backend, run lowerings by file in N parallel threads.
          *  0 means use a thread per processor core. Default value is 1 */
         var parallelBackendThreads: Int
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.parallelBackendThreads = value
+                this@KotlincBuilder.ktc.advanced.parallelBackendThreads = value
             }
 
         /** Debug option: Run compiler with async profiler, save snapshots to outputDir, command is passed to
@@ -338,7 +338,7 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
             lateinit var outputDir: File
 
             operator fun invoke() {
-                KotlinC.Advanced.profile = "${profilerPath.absolutePath}:${commands.joinToString(",")}:${outputDir.absolutePath}"
+                this@KotlincBuilder.ktc.advanced.profile = "${profilerPath.absolutePath}:${commands.joinToString(",")}:${outputDir.absolutePath}"
             }
         }
 
@@ -346,14 +346,14 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
         var repeat: Int
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.repeat = value
+                this@KotlincBuilder.ktc.advanced.repeat = value
             }
 
         /** Select code generation scheme for SAM conversions. */
         var samConversions: KotlinC.Advanced.SamConvertions
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.samConversions = value
+                this@KotlincBuilder.ktc.advanced.samConversions = value
             }
 
         /** Transform '(' and ')' in method names to some other character sequence.
@@ -361,34 +361,34 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
          *  parentheses in identifiers on certain platforms */
         val sanitizeParentheses: Unit
             get() {
-                KotlinC.Advanced.sanitizeParentheses = true
+                this@KotlincBuilder.ktc.advanced.sanitizeParentheses = true
             }
 
         /** Script resolver environment in key-value pairs (the value could be quoted and escaped) */
-        val scriptResolverEnvironment: MutableMap<String, String> by KotlinC.Advanced::scriptResolverEnvironment
+        val scriptResolverEnvironment: MutableMap<String, String> by this@KotlincBuilder.ktc.advanced::scriptResolverEnvironment
 
         /** Combine modules for source files and binary dependencies into a single module */
         val singleModule: Unit
             get() {
-                KotlinC.Advanced.singleModule = true
+                this@KotlincBuilder.ktc.advanced.singleModule = true
             }
 
         /** Allow Kotlin runtime libraries of incompatible versions in the classpath */
         val skipRuntimeVersionCheck: Unit
             get() {
-                KotlinC.Advanced.skipRuntimeVersionCheck = true
+                this@KotlincBuilder.ktc.advanced.skipRuntimeVersionCheck = true
             }
 
         /** Generate nullability assertions for non-null Java expressions */
         val strictJavaNullabilityAssertions: Unit
             get() {
-                KotlinC.Advanced.strictJavaNullabilityAssertions = true
+                this@KotlincBuilder.ktc.advanced.strictJavaNullabilityAssertions = true
             }
 
         /** Generate metadata with strict version semantics (see kdoc on Metadata.extraInt) */
         val generateStrictMetadataVersion: Unit
             get() {
-                KotlinC.Advanced.generateStrictMetadataVersion = true
+                this@KotlincBuilder.ktc.advanced.generateStrictMetadataVersion = true
             }
 
         /** Select code generation scheme for string concatenation.
@@ -396,7 +396,7 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
         var stringConcat: KotlinC.Advanced.StringConcat
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.stringConcat = value
+                this@KotlincBuilder.ktc.advanced.stringConcat = value
             }
 
         /** Specify behavior for Checker Framework compatqual annotations (NullableDecl/NonNullDecl).
@@ -404,19 +404,19 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
         var supportCompatqualCheckerFrameworkAnnotations: Boolean
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.supportCompatqualCheckerFrameworkAnnotations = value
+                this@KotlincBuilder.ktc.advanced.supportCompatqualCheckerFrameworkAnnotations = value
             }
 
         /** Suppress deprecation warning about deprecated JVM target versions */
         val suppressDeprecatedJvmTargetWarning: Unit
             get() {
-                KotlinC.Advanced.suppressDeprecatedJvmTargetWarning = true
+                this@KotlincBuilder.ktc.advanced.suppressDeprecatedJvmTargetWarning = true
             }
 
         /** Suppress the "cannot access built-in declaration" error (useful with -no-stdlib) */
         val suppressMissingBuiltinsError: Unit
             get() {
-                KotlinC.Advanced.suppressMissingBuiltinsError = true
+                this@KotlincBuilder.ktc.advanced.suppressMissingBuiltinsError = true
             }
 
         /** Enable strict mode for some improvements in the type enhancement for loaded Java types based on nullability
@@ -424,134 +424,134 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
          *  See KT-45671 for more details */
         val typeEnhancementImprovementsStrictMode: Unit
             get() {
-                KotlinC.Advanced.typeEnhancementImprovementsStrictMode = true
+                this@KotlincBuilder.ktc.advanced.typeEnhancementImprovementsStrictMode = true
             }
 
         /** Use the IR backend. This option has no effect unless the language version less than 1.5 is used */
         val useIr: Unit
             get() {
-                KotlinC.Advanced.useIr = true
+                this@KotlincBuilder.ktc.advanced.useIr = true
             }
 
         /** Use javac for Java source and class files analysis */
         val useJavac: Unit
             get() {
-                KotlinC.Advanced.useJavac = true
+                this@KotlincBuilder.ktc.advanced.useJavac = true
             }
 
         /** Use the old JVM backend */
         val useOldBackend: Unit
             get() {
-                KotlinC.Advanced.useOldBackend = true
+                this@KotlincBuilder.ktc.advanced.useOldBackend = true
             }
 
         /** Use old class files reading implementation. This may slow down the build and cause problems with Groovy
          *  interop. Should be used in case of problems with the new implementation */
         val useOldClassFilesReading: Unit
             get() {
-                KotlinC.Advanced.useOldClassFilesReading = true
+                this@KotlincBuilder.ktc.advanced.useOldClassFilesReading = true
             }
 
         /** Use 1.4 inline classes mangling scheme instead of 1.4.30 one */
         val use14InlineClassesManglingScheme: Unit
             get() {
-                KotlinC.Advanced.use14InlineClassesManglingScheme = true
+                this@KotlincBuilder.ktc.advanced.use14InlineClassesManglingScheme = true
             }
 
         /** Use old, SourceInterpreter-based analysis for fields, used for spilled variables in coroutines */
         val useOldSpilledVarTypeAnalysis: Unit
             get() {
-                KotlinC.Advanced.useOldSpilledVarTypeAnalysis = true
+                this@KotlincBuilder.ktc.advanced.useOldSpilledVarTypeAnalysis = true
             }
 
         /** Use type table in metadata serialization */
         val useTypeTable: Unit
             get() {
-                KotlinC.Advanced.useTypeTable = true
+                this@KotlincBuilder.ktc.advanced.useTypeTable = true
             }
 
         /** Allow compiling code in package 'kotlin' and allow not requiring kotlin.stdlib in module-info */
         val allowKotlinPackage: Unit
             get() {
-                KotlinC.Advanced.allowKotlinPackage = true
+                this@KotlincBuilder.ktc.advanced.allowKotlinPackage = true
             }
 
         /** Allow compiling code when `kotlin.Result` is used as a return type */
         val allowResultReturnType: Unit
             get() {
-                KotlinC.Advanced.allowResultReturnType = true
+                this@KotlincBuilder.ktc.advanced.allowResultReturnType = true
             }
 
         /** Check pre- and postconditions on phases */
         val checkPhaseConditions: Unit
             get() {
-                KotlinC.Advanced.checkPhaseConditions = true
+                this@KotlincBuilder.ktc.advanced.checkPhaseConditions = true
             }
 
         /** Run sticky condition checks on subsequent phases as well. Implies -Xcheck-phase-conditions */
         val checkStickyPhaseConditions: Unit
             get() {
-                KotlinC.Advanced.checkStickyPhaseConditions = true
+                this@KotlincBuilder.ktc.advanced.checkStickyPhaseConditions = true
             }
 
         /** Sources of the common module that need to be compiled together with this module in the multi-platform mode.
          *  Should be a subset of sources passed as free arguments */
-        val commonSources: ArrayList<String> by KotlinC.Advanced::commonSources
+        val commonSources: ArrayList<String> by this@KotlincBuilder.ktc.advanced::commonSources
 
         /** Do not enable scripting plugin by default */
         val disableDefaultScriptingPlugin: Unit
             get() {
-                KotlinC.Advanced.disableDefaultScriptingPlugin = true
+                this@KotlincBuilder.ktc.advanced.disableDefaultScriptingPlugin = true
             }
 
         /** Disable backend phases */
         val disablePhases: Unit
             get() {
-                KotlinC.Advanced.disablePhases = true
+                this@KotlincBuilder.ktc.advanced.disablePhases = true
             }
 
         /** Do not use the ultra light classes implementation */
         val disableUltraLightClasses: Unit
             get() {
-                KotlinC.Advanced.disableUltraLightClasses = true
+                this@KotlincBuilder.ktc.advanced.disableUltraLightClasses = true
             }
 
         /** Dump backend state into directory */
         val dumpDirectory: Unit
             get() {
-                KotlinC.Advanced.dumpDirectory = true
+                this@KotlincBuilder.ktc.advanced.dumpDirectory = true
             }
 
         /** FqName of declaration that should be dumped */
         val dumpFqname: Unit
             get() {
-                KotlinC.Advanced.dumpFqname = true
+                this@KotlincBuilder.ktc.advanced.dumpFqname = true
             }
 
         /** Dump detailed performance statistics to the specified file */
         var dumpPerf: File
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.dumpPerf = value
+                this@KotlincBuilder.ktc.advanced.dumpPerf = value
             }
 
         /** Enable experimental language feature: effect system */
         val effectSystem: Unit
             get() {
-                KotlinC.Advanced.effectSystem = true
+                this@KotlincBuilder.ktc.advanced.effectSystem = true
             }
 
         /** Enable experimental expect/actual linker */
         val expectActualLinker: Unit
             get() {
-                KotlinC.Advanced.expectActualLinker = true
+                this@KotlincBuilder.ktc.advanced.expectActualLinker = true
             }
 
         /** Enable and propagate usages of experimental API for marker annotation with the given fully qualified name */
         var experimental: String
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.experimental = value
+                this@KotlincBuilder.ktc.advanced.experimental = value
             }
 
         /** Force compiler to report errors on all public API declarations without explicit visibility or return type.
@@ -559,81 +559,81 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
         var explicitApi: KotlinC.Advanced.ExplicitApi
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.explicitApi = value
+                this@KotlincBuilder.ktc.advanced.explicitApi = value
             }
 
         /** Enable additional compiler checks that might provide verbose diagnostic information for certain errors.
          *  Warning: this mode is not backward-compatible and might cause compilation errors in previously compiled code. */
         val extendedCompilerChecks: Unit
             get() {
-                KotlinC.Advanced.extendedCompilerChecks = true
+                this@KotlincBuilder.ktc.advanced.extendedCompilerChecks = true
             }
 
         /** Enable compatibility changes for generic type inference algorithm */
         val inferenceCompatibility: Unit
             get() {
-                KotlinC.Advanced.inferenceCompatibility = true
+                this@KotlincBuilder.ktc.advanced.inferenceCompatibility = true
             }
 
         /** Enable experimental inline classes */
         val inlineClasses: Unit
             get() {
-                KotlinC.Advanced.inlineClasses = true
+                this@KotlincBuilder.ktc.advanced.inlineClasses = true
             }
 
         /** Path to the kotlin-compiler.jar or directory where IntelliJ configuration files can be found */
         var intellijPluginRoot: File
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.intellijPluginRoot = value
+                this@KotlincBuilder.ktc.advanced.intellijPluginRoot = value
             }
 
         /** Allow var smart casts despite assignment in try block */
         val legacySmartCastAfterTry: Unit
             get() {
-                KotlinC.Advanced.legacySmartCastAfterTry = true
+                this@KotlincBuilder.ktc.advanced.legacySmartCastAfterTry = true
             }
 
         /** List backend phases */
         val listPhases: Unit
             get() {
-                KotlinC.Advanced.listPhases = true
+                this@KotlincBuilder.ktc.advanced.listPhases = true
             }
 
         /** Change metadata version of the generated binary files */
         val metadataVersion: Unit
             get() {
-                KotlinC.Advanced.metadataVersion = true
+                this@KotlincBuilder.ktc.advanced.metadataVersion = true
             }
 
         /** Enable experimental language support for multi-platform projects */
         val multiPlatform: Unit
             get() {
-                KotlinC.Advanced.multiPlatform = true
+                this@KotlincBuilder.ktc.advanced.multiPlatform = true
             }
 
         /** Names of elements that should not be dumped */
         val excludeFromDumping: Unit
             get() {
-                KotlinC.Advanced.excludeFromDumping = true
+                this@KotlincBuilder.ktc.advanced.excludeFromDumping = true
             }
 
         /** Enable new experimental generic type inference algorithm */
         val newInference: Unit
             get() {
-                KotlinC.Advanced.newInference = true
+                this@KotlincBuilder.ktc.advanced.newInference = true
             }
 
         /** Do not check presence of 'actual' modifier in multi-platform projects */
         val noCheckActual: Unit
             get() {
-                KotlinC.Advanced.noCheckActual = true
+                this@KotlincBuilder.ktc.advanced.noCheckActual = true
             }
 
         /** Disable method inlining */
         val dontInline: Unit
             get() {
-                KotlinC.Advanced.noInline = true
+                this@KotlincBuilder.ktc.advanced.noInline = true
             }
 
         /** Enable usages of API that requires opt-in with an opt-in requirement marker with the given fully
@@ -641,118 +641,118 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
         var optIn: String
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.optIn = value
+                this@KotlincBuilder.ktc.advanced.optIn = value
             }
 
         /** Dump backend state both before and after these phases */
         val phasesToDump: Unit
             get() {
-                KotlinC.Advanced.phasesToDump = true
+                this@KotlincBuilder.ktc.advanced.phasesToDump = true
             }
 
         /** Dump backend state after these phases */
         val phasesToDumpAfter: Unit
             get() {
-                KotlinC.Advanced.phasesToDumpAfter = true
+                this@KotlincBuilder.ktc.advanced.phasesToDumpAfter = true
             }
 
         /** Dump backend state before these phases */
         val phasesToDumpBefore: Unit
             get() {
-                KotlinC.Advanced.phasesToDumpBefore = true
+                this@KotlincBuilder.ktc.advanced.phasesToDumpBefore = true
             }
 
         /** Validate backend state both before and after these phases */
         val phasesToValidate: Unit
             get() {
-                KotlinC.Advanced.phasesToValidate = true
+                this@KotlincBuilder.ktc.advanced.phasesToValidate = true
             }
 
         /** Validate backend state after these phases */
         val phasesToValidateAfter: Unit
             get() {
-                KotlinC.Advanced.phasesToValidateAfter = true
+                this@KotlincBuilder.ktc.advanced.phasesToValidateAfter = true
             }
 
         /** Validate backend state before these phases */
         val phasesToValidateBefore: Unit
             get() {
-                KotlinC.Advanced.phasesToValidateBefore = true
+                this@KotlincBuilder.ktc.advanced.phasesToValidateBefore = true
             }
 
         /** Load plugins from the given classpath */
         var plugin: File
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.plugin = value
+                this@KotlincBuilder.ktc.advanced.plugin = value
             }
 
         /** Enable experimental support for @PolymorphicSignature (MethodHandle/VarHandle) */
         val polymorphicSignature: Unit
             get() {
-                KotlinC.Advanced.polymorphicSignature = true
+                this@KotlincBuilder.ktc.advanced.polymorphicSignature = true
             }
 
         /** Profile backend phases */
         val profilePhases: Unit
             get() {
-                KotlinC.Advanced.profilePhases
+                this@KotlincBuilder.ktc.advanced.profilePhases
             }
 
         /** Generate proper IEEE 754 comparisons in all cases if values are statically known to be of primitive
          *  numeric types */
         val properIeee754Comparisons: Unit
             get() {
-                KotlinC.Advanced.properIeee754Comparisons = true
+                this@KotlincBuilder.ktc.advanced.properIeee754Comparisons = true
             }
 
         /** Enable reading of contracts from metadata */
         val readDeserializedContracts: Unit
             get() {
-                KotlinC.Advanced.readDeserializedContracts = true
+                this@KotlincBuilder.ktc.advanced.readDeserializedContracts = true
             }
 
         /** Report source to output files mapping */
         val reportOutputFiles: Unit
             get() {
-                KotlinC.Advanced.reportOutputFiles = true
+                this@KotlincBuilder.ktc.advanced.reportOutputFiles = true
             }
 
         /** Report detailed performance statistics */
         val reportPerf: Unit
             get() {
-                KotlinC.Advanced.reportPerf = true
+                this@KotlincBuilder.ktc.advanced.reportPerf = true
             }
 
         /** Support inferring type arguments based on only self upper bounds of the corresponding type parameters */
         val selfUpperBoundInference: Unit
             get() {
-                KotlinC.Advanced.selfUpperBoundInference = true
+                this@KotlincBuilder.ktc.advanced.selfUpperBoundInference = true
             }
 
         /** Allow to load classes with bad metadata version and pre-release classes */
         val skipMetadataVersionCheck: Unit
             get() {
-                KotlinC.Advanced.skipMetadataVersionCheck = true
+                this@KotlincBuilder.ktc.advanced.skipMetadataVersionCheck = true
             }
 
         /** Allow to load pre-release classes */
         val skipPrereleaseCheck: Unit
             get() {
-                KotlinC.Advanced.skipPrereleaseCheck = true
+                this@KotlincBuilder.ktc.advanced.skipPrereleaseCheck = true
             }
 
         /** Suppress warnings about outdated, inconsistent or experimental language or API versions */
         val suppressVersionWarnings: Unit
             get() {
-                KotlinC.Advanced.suppressVersionWarnings = true
+                this@KotlincBuilder.ktc.advanced.suppressVersionWarnings = true
             }
 
         /** Eliminate builder inference restrictions like allowance of returning type variables of a builder
          *  inference call */
         val unrestrictedBuilderInference: Unit
             get() {
-                KotlinC.Advanced.unrestrictedBuilderInference = true
+                this@KotlincBuilder.ktc.advanced.unrestrictedBuilderInference = true
             }
 
         /** Enable, but don't propagate usages of experimental API for marker annotation with the given fully
@@ -760,31 +760,31 @@ class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
         var useExperimental: String
             @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
             set(value) {
-                KotlinC.Advanced.useExperimental = value
+                this@KotlincBuilder.ktc.advanced.useExperimental = value
             }
 
         /** Compile using Front-end IR. Warning: this feature is far from being production-ready */
         val useFir: Unit
             get() {
-                KotlinC.Advanced.useFir = true
+                this@KotlincBuilder.ktc.advanced.useFir = true
             }
 
         /** Use extended analysis mode based on Front-end IR. Warning: this feature is far from being production-ready */
         val useFirExtendedCheckers: Unit
             get() {
-                KotlinC.Advanced.useFirExtendedCheckers = true
+                this@KotlincBuilder.ktc.advanced.useFirExtendedCheckers = true
             }
 
         /** Enable Support named arguments in their own position even if the result appears as mixed */
         val useMixedNamedArguments: Unit
             get() {
-                KotlinC.Advanced.useMixedNamedArguments = true
+                this@KotlincBuilder.ktc.advanced.useMixedNamedArguments = true
             }
 
         /** Be verbose while performing these backend phases */
         val verbosePhases: Unit
             get() {
-                KotlinC.Advanced.verbosePhases = true
+                this@KotlincBuilder.ktc.advanced.verbosePhases = true
             }
     }
 

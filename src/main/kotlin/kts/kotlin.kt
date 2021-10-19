@@ -8,7 +8,7 @@ inline fun kotlin(block: KotlinBuilder.() -> Unit) {
     kt()
 }
 
-class Kotlin(val cmd: String = "kotlin") {
+class Kotlin(override val cmd: String = "kotlin") : Cmd<KotlinBuilder> {
 
     var howToRun: HowToRun? = null
     val classpath = ArrayList<File>()
@@ -25,8 +25,7 @@ class Kotlin(val cmd: String = "kotlin") {
 
     val arguments = ArrayList<String>()
 
-    operator fun invoke(): String {
-
+    override fun cmdLine(): List<String> {
         val args = arrayListOf<String>()
         howToRun?.let { args.add("-howtorun", it) }
         if (classpath.isNotEmpty()) args.add("-cp", classpath.joinToString(File.pathSeparator) { it.absolutePath })
@@ -41,11 +40,10 @@ class Kotlin(val cmd: String = "kotlin") {
         command?.apply { args += absolutePath }
         if (expression.isNotEmpty()) args.add("-e", expression)
         if (arguments.isNotEmpty()) args += arguments
-
-        //        print(cmd)
-        return cmd(args)
+        return args
     }
 
-    enum class HowToRun { guess, classfile, jar, script }
+    override fun invoke(block: KotlinBuilder.() -> Unit) = apply { KotlinBuilder(this).block() }
 
+    enum class HowToRun { guess, classfile, jar, script }
 }

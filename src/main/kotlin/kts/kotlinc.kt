@@ -8,7 +8,7 @@ inline fun kotlinc(block: KotlincBuilder.() -> Unit) {
     ktc()
 }
 
-class KotlinC(val cmd: String = "kotlinc") {
+class KotlinC(override val cmd: String = "kotlinc") : Cmd<KotlincBuilder> {
 
     val classpath = ArrayList<String>()
     var dst: File? = null
@@ -39,9 +39,9 @@ class KotlinC(val cmd: String = "kotlinc") {
 
     val sourcefiles = ArrayList<File>()
 
-    var _println = false
+    override operator fun invoke(block: KotlincBuilder.() -> Unit) = apply { KotlincBuilder(this).block() }
 
-    operator fun invoke(): String {
+    override fun cmdLine(): List<String> {
         val args = arrayListOf<String>()
         if (classpath.isNotEmpty()) args += classpath.joinToString(File.pathSeparator)
         dst?.run { args.add("-d", absolutePath) }
@@ -73,15 +73,18 @@ class KotlinC(val cmd: String = "kotlinc") {
         jvmOptions(args)
         argFile?.run { args += "@$absolutePath" }
 
+        advanced(args)
 
-        args += sourcefiles.joinToString(" ") { it.absolutePath }
 
-        if (_println)
-            print("$cmd ${args.joinToString(" ")}")
-        return cmd(args)
+        if(sourcefiles.isNotEmpty())
+            args += sourcefiles.map { it.absolutePath }
+
+        return args
     }
 
-    object Advanced {
+    val advanced = Advanced()
+
+    class Advanced {
         var abiStability: Boolean? = null
         val addModules = ArrayList<String>()
         var allowNoSourceFiles = false
@@ -191,9 +194,8 @@ class KotlinC(val cmd: String = "kotlinc") {
         var useMixedNamedArguments = false
         var verbosePhases = false
 
-        operator fun invoke() {
-            val cmd = "kotlinc"
-            val args = arrayListOf<String>()
+        operator fun invoke(args: ArrayList<String>) {
+
             fun ap(s: String, v: Any? = null) {
                 var arg = "-X$s"
                 v?.let { arg += "=$it" }

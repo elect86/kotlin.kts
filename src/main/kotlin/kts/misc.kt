@@ -27,6 +27,10 @@ fun main() {
     kotlinc {
         version
     }
+
+    KotlinC().invoke {
+        version
+    }()
 }
 
 fun ArrayList<String>.add(key: String, value: Any) {
