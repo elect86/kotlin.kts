@@ -11,6 +11,7 @@ operator fun String.invoke(args: ArrayList<String>): String {
         //        .redirectOutput(Redirect.INHERIT)
         //        .redirectError(Redirect.INHERIT)
         .start()
+    process.waitFor()
     //        .waitFor(60, TimeUnit.MINUTES)
     return String(process.inputStream.readAllBytes())
 }

@@ -39,6 +39,7 @@ class KotlinC {
 
     val sourcefiles = ArrayList<File>()
 
+    var _println = false
 
     operator fun invoke(): String {
         val cmd = "kotlinc"
@@ -76,7 +77,8 @@ class KotlinC {
 
         args += sourcefiles.joinToString(" ") { it.absolutePath }
 
-        print("$cmd(${args.joinToString(" ")}")
+        if (_println)
+            print("$cmd ${args.joinToString(" ")}")
         return cmd(args)
     }
 
