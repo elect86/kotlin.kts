@@ -10,7 +10,7 @@ inline fun kotlinc(block: KotlincBuilder.() -> Unit) {
 
 class KotlinC(override val cmd: String = "kotlinc") : Cmd<KotlincBuilder> {
 
-    val classpath = ArrayList<String>()
+    val classpath = ArrayList<File>()
     var dst: File? = null
     var expression = ""
     var includeRuntime = false
@@ -43,7 +43,7 @@ class KotlinC(override val cmd: String = "kotlinc") : Cmd<KotlincBuilder> {
 
     override fun cmdLine(): List<String> {
         val args = arrayListOf<String>()
-        if (classpath.isNotEmpty()) args += classpath.joinToString(File.pathSeparator)
+        if (classpath.isNotEmpty()) args.add("-cp", classpath.joinToString(File.pathSeparator))
         dst?.run { args.add("-d", absolutePath) }
         if (expression.isNotEmpty()) args.add("-e", expression)
         if (includeRuntime) args += "-include-runtime"

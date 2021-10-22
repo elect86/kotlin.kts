@@ -6,7 +6,7 @@ import java.io.File
 class KotlincBuilder(val ktc: KotlinC = KotlinC()) {
 
     /** List of directories and JAR/ZIP archives to search for user class files */
-    val classpath: ArrayList<String> by ktc::classpath
+    val classpath: ArrayList<File> by ktc::classpath
 
     /** Destination for generated class files */
     var dst: File
