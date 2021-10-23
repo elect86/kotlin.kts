@@ -36,7 +36,7 @@ class KotlinC(override val cmd: String = "kotlinc") : Cmd<KotlincBuilder> {
     val jvmOptions = JvmOptions()
     var argFile: File? = null
 
-    var custom = ""
+    val custom = ArrayList<String>()
 
     val sourcefiles = ArrayList<File>()
 
@@ -50,7 +50,7 @@ class KotlinC(override val cmd: String = "kotlinc") : Cmd<KotlincBuilder> {
         if (includeRuntime) args += "-include-runtime"
         if (javaParameters) args += "-java-parameters"
         jdkHome?.run { args.add("-jdk-home", absolutePath) }
-        if (jvmTarget != -1) args.add("-jvm-target", if(jvmTarget < 9) "1.$jvmTarget" else jvmTarget)
+        if (jvmTarget != -1) args.add("-jvm-target", if (jvmTarget < 9) "1.$jvmTarget" else jvmTarget)
         if (moduleName.isNotEmpty()) args.add("-module-name", moduleName)
         if (noJdk) args += "-no-jdk"
         if (noReflect) args += "-no-reflect"
@@ -76,11 +76,9 @@ class KotlinC(override val cmd: String = "kotlinc") : Cmd<KotlincBuilder> {
 
         advanced(args)
 
-        if (custom.isNotEmpty())
-            args += custom
+        args += custom
 
-        if(sourcefiles.isNotEmpty())
-            args += sourcefiles.map { it.absolutePath }
+        args += sourcefiles.map { it.absolutePath }
 
         return args
     }
