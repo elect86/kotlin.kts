@@ -78,11 +78,7 @@ class KotlinC(override val cmd: String = "kotlinc") : Cmd<KotlincBuilder> {
 
         args += custom
 
-        for (src in sourceFiles)
-            if (src.isFile && src.extension == "kt")
-                args += src.absolutePath
-            else // it's a dir, expand
-                args += src.walk().filter { it.isFile && it.extension == "kt" }.map { it.absolutePath }
+        args += sourceFiles.map { it.absolutePath }
 
         return args
     }
