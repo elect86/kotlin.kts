@@ -36,6 +36,7 @@ class KotlinC(override val cmd: String = "kotlinc") : Cmd<KotlincBuilder> {
     val jvmOptions = JvmOptions()
     var argFile: File? = null
 
+    var custom = ""
 
     val sourcefiles = ArrayList<File>()
 
@@ -75,6 +76,8 @@ class KotlinC(override val cmd: String = "kotlinc") : Cmd<KotlincBuilder> {
 
         advanced(args)
 
+        if (custom.isNotEmpty())
+            args += custom
 
         if(sourcefiles.isNotEmpty())
             args += sourcefiles.map { it.absolutePath }
