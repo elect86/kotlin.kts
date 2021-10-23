@@ -225,7 +225,7 @@ class KotlinC(override val cmd: String = "kotlinc") : Cmd<KotlincBuilder> {
             if (jsr305.isNotEmpty()) ap("jsr305", jsr305)
             jvmDefault?.let { ap("jvm-default", it) }
             if (klib.isNotEmpty()) ap("klib", klib.joinToString(File.pathSeparator))
-            lambdas?.let { ap("lamdas", it) }
+            lambdas?.let { ap("lambdas", it) }
             if (noCallAssertions) ap("no-call-assertions")
             if (noExceptionOnExplicitEqualsForBoxedNull) ap("no-exception-on-explicit-equals-for-boxed-null")
             if (noKotlinNothingValueException) ap("no-kotlin-nothing-value-exception")
