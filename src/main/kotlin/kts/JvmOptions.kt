@@ -4,7 +4,7 @@ import java.io.File
 
 class JvmOptions {
 
-    var minHeapSize = ""
+    var initialHeapSize = ""
     var maxHeapSize = ""
 
     //  Behavioral Options
@@ -106,6 +106,11 @@ class JvmOptions {
     var gcLogFileSize = -1
 
     operator fun invoke(args: ArrayList<String>) {
+
+        if (initialHeapSize.isNotEmpty())
+            args += "-J-Xms$initialHeapSize"
+        if (maxHeapSize.isNotEmpty())
+            args += "-J-Xmx$maxHeapSize"
 
         operator fun Int.invoke(name: String) {
             if (this != -1) args += "-J-XX:$name=$this"

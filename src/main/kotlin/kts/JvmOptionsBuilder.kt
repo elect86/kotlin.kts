@@ -11,7 +11,7 @@ class JvmOptionsBuilder(override val opt: JvmOptions) : BehavioralJvmOptionsBuil
     var minHeapSize: String
         @Deprecated(message = "Write only property", level = DeprecationLevel.HIDDEN) get() = error("")
         set(value) {
-            opt.minHeapSize = value
+            opt.initialHeapSize = value
         }
 
     /** Units can be marked as ‘g' for GB, ‘m' for MB and ‘k' for KB. */

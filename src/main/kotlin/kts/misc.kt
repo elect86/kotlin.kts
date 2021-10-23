@@ -19,9 +19,9 @@ operator fun String.invoke(args: ArrayList<String>): String {
 fun main() {
     kotlin {
         version
-//        jvmOptions {
-//            allowUserSignalHandlers
-//        }
+        jvmOptions {
+            allowUserSignalHandlers
+        }
     }
 
     kotlinc {
